@@ -1,0 +1,27 @@
+{
+  "name": "tatcha-challenge",
+  "version": "0.1.0",
+  "description": "My solution to a coding challenge from Tatcha",
+  "main": "app/index.js",
+  "scripts": {
+    "dev": "nodemon ./app/index.js",
+    "start": "node ./app/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ZacharyRSmith/tatcha.git"
+  },
+  "author": "ZacharyRSmith <ZacharySmith4989@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZacharyRSmith/tatcha/issues"
+  },
+  "homepage": "https://github.com/ZacharyRSmith/tatcha#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.12.0"
+  }
+}
