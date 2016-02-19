@@ -30,21 +30,13 @@ $(function() {
         app.setCurrentAlbum(albumId);
       });
       app.$getAlbumByUserId.on('click', function () {
-        app.getAlbumByUserId(1);
+        app.setCurrentAlbums(1);
       });
-    },
-    getAlbumByUserId: function (userId) {
-      if (!app.albumsCache[userId]) return;
-      var newCrntAlbums = app.albumsCache[userId].reduce(function (newCrntAlbums, album) {
-        var album = '<li id="album' + album.id + '">' + album.title + '</li>';
-        return newCrntAlbums + album;
-      }, '');
-
-      app.$currentAlbums.html(newCrntAlbums);
     },
     setAlbumsCache: function () {
       app.startSpinner();
 
+      // DUP 1 possibly DRY DUP 1's
       $.ajax({
         url: app.root + '/albums',
         method: 'GET'
@@ -63,6 +55,7 @@ $(function() {
       });
     },
     setCurrentAlbum: function (albumId) {
+      // DUP 2 possibly DRY DUP 2's using HTML template
       if (!app.photosCache[albumId]) return;
       var newCrntAlbum = app.photosCache[albumId].reduce(function (newCrntAlbum, photo) {
         var photo = '<li id="photo' + photo.id + '">' +
@@ -71,13 +64,24 @@ $(function() {
                            'src="' + photo.thumbnailUrl + '" />' +
                     '</li>';
         return newCrntAlbum + photo;
-      }, '');
+      }, '<p>One day we might let you click on a thumbnail for a larger pic! ( :</p>');
 
       app.$currentAlbum.html(newCrntAlbum);
+    },
+    setCurrentAlbums: function (userId) {
+      // DUP 2 possibly DRY DUP 2's using HTML template
+      if (!app.albumsCache[userId]) return;
+      var newCrntAlbums = app.albumsCache[userId].reduce(function (newCrntAlbums, album) {
+        var album = '<li id="album' + album.id + '">' + album.title + '</li>';
+        return newCrntAlbums + album;
+      }, '<p>Click an album title to list its photos:</p>');
+
+      app.$currentAlbums.html(newCrntAlbums);
     },
     setPhotosCache: function () {
       app.startSpinner();
 
+      // DUP 1 possibly DRY DUP 1's
       $.ajax({
         url: app.root + '/photos',
         method: 'GET'
