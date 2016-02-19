@@ -8,6 +8,7 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'app/**/*.js',
+        '!app/lib/**/*.js'
       ],
       options: {
         globals: {

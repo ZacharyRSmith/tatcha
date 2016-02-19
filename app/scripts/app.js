@@ -13,28 +13,21 @@ $(function() {
       app.setAlbumsCache();
 
       // Cache jQuery selectors
+      app.$currentAlbums = $('#currentAlbums');
       app.$getAlbumByUserId = $('#getAlbumByUserId');
 
       // Add listeners
-      app.$getAlbumByUserId.on('click', app.getAlbumByUserId(1));
+      app.$getAlbumByUserId.on('click', function () {
+        app.getAlbumByUserId(1);
+      });
     },
     getAlbumByUserId: function (userId) {
-      app.startSpinner();
+      if (!app.albumsCache[userId]) return;
+      var newCrntAlbums = app.albumsCache[userId].reduce(function (newCrntAlbums, album) {
+        return newCrntAlbums + '<li>' + album.title + '</li>';
+      }, '');
 
-      $.ajax({
-        url: app.root + '/albums/' + userId,
-        method: 'GET'
-      }).done(function (data) {
-        console.log(data);
-        return data;
-      }).fail(function (errMsg, errObj) {
-        errMsg = errMsg || "None given.";
-        errObj = errObj || "None given.";
-        console.error("Error message: ", errMsg);
-        console.error("Error object: ", errObj);
-      }).always(function () {
-        app.stopSpinner();
-      });
+      app.$currentAlbums.html(newCrntAlbums);
     },
     setAlbumsCache: function () {
       app.startSpinner();
