@@ -30,7 +30,17 @@ $(function() {
         app.setCurrentAlbum(albumId);
       });
       app.$getAlbumByUserId.on('click', function () {
-        app.setCurrentAlbums(1);
+        function promptUser () {
+          var userInput = prompt('Please enter in the userId of the albums you want to see...');
+          if (!app.albumsCache[userInput]) {
+            var userConfirm = confirm('I\'m sorry, I did not understand "' + userInput + '".\n' +
+                                      'Would you like to try again?');
+            return (userConfirm ? promptUser() : null);
+          }
+          app.setCurrentAlbums(userInput);
+        };
+
+        promptUser();
       });
     },
     setAlbumsCache: function () {
